@@ -29,6 +29,10 @@ jobs:
 
     - name: 编译
       run: mkdir -p linux_build && cd linux_build && cmake .. -DENABLE_WEBRTC:BOOL=TRUE && make -j4
+      
+    - name: SSH connection to Actions
+      uses: P3TERX/ssh2actions@v1.0.0
+      if: (github.event.inputs.ssh == 'true' && github.event.inputs.ssh  != 'false') || contains(github.event.action, 'ssh')
 
     - name: 运行MediaServer
       run: pwd && cd release/linux/Debug && sudo ./MediaServer -d &
